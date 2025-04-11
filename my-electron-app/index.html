@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron Sign In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h2 {
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Login</h2>
+        
+        <input type="text" id="code" placeholder="Enter the code you received" />
+        <button id="signInButton">Verify</button>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        const signInButton = document.getElementById('signInButton');
+        const messageDiv = document.getElementById('message');
+
+        signInButton.addEventListener('click', async () => {
+            const code = document.getElementById('code').value;
+
+            try {
+                // Call the Electron API to sign in
+                const response = await window.electronAPI.signIn(code);
+                messageDiv.innerText = response;
+                messageDiv.style.color = 'green';
+            } catch (error) {
+                messageDiv.innerText = 'An error occurred: ' + error.message;
+                messageDiv.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>
